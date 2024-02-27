@@ -120,23 +120,25 @@ function updatePrice() {
   finalCents = totalPriceInCents % 100;
 }
 
-
 cartButton.onclick = () => {
   updatePrice();
 
+  let orderDetails = "";
 
   for (let index = 0; index < items.length; index++) {
-    if (items[index].quantity != 0) {
-      console.log(
+    if (items[index].quantity !== 0) {
+      orderDetails +=
         "Item name: " +
-          items[index].name +
-          " - Quantity: " +
-          items[index].quantity
-      );
+        items[index].name +
+        " - Quantity: " +
+        items[index].quantity +
+        "\n";
     }
   }
 
-  console.log(
-    "The total amount is " + finalDollars + "$ and " + finalCents + " cents"
-  );
+  let totalAmountMessage =
+    "The total amount is " + finalDollars + "$ and " + finalCents + " cents";
+  let message = orderDetails + totalAmountMessage;
+  let encodedMessage = encodeURIComponent(message);
+  window.open("https://api.whatsapp.com/send?text=" + encodedMessage);
 };
